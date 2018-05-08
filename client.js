@@ -7,13 +7,24 @@ const cities = [];
 //fetch returns the promise/what comes back
 //blob needs to be converted from raw data to json
 fetch(endpoint)
-.then(blob => blob.json())
-//...spreads the array so pushes each separately es6
-.then(data => cities.push(...data))
+    .then(blob => blob.json())
+    //...spreads the array so pushes each separately es6
+    .then(data => cities.push(...data))
 
 function findMatches(wordToMatch, cities) {
     return cities.filter(place => {
-//here we need to figure out if it matches what was searched
-
+        //here we need to figure out if it matches what was searched
+        //g is global i is case insensitive
+        const regex = new RegExp(wordToMatch, 'gi');
+        return place.city.match(regex) || place.state.match(regex)
     })
 }
+
+function displayMatches() {
+    console.log(this.value)
+}
+
+const searchInput = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
+
+searchInput.addEventListener('change', findMatches)
